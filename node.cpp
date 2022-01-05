@@ -10,7 +10,7 @@ Node::Node(){
 }
 
 Node::~Node(){
-  s->remove();
+  delete s;
   next = NULL;
 }
 
@@ -23,7 +23,7 @@ Student* Node::getStudent(){
 }
 
 void Node::setNext(Node* newNext){
-  next = newNext
+  next = newNext;
 }
 
 Node* Node::getNext(){

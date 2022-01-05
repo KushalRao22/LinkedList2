@@ -6,13 +6,29 @@ using namespace std;
 
 void add();
 void print (Node* next);
+void remove();
 
 Node* head = NULL;
 
 int main(){
-  
-
-  
+  char input[10];
+  bool play = true;
+  while(play){
+    cin >> input;
+    if(strcmp(input, "Add") == 0){
+      add();
+    }
+    if(strcmp(input, "Print") == 0){
+      print(head);
+      cout << endl;
+    }
+    if(strcmp(input, "Quit") == 0){
+      play = false;
+    }
+    if(strcmp(input, "Remove") == 0){
+      remove();
+    }
+  }
   return 0;
 }
 
@@ -36,10 +52,38 @@ void add(){
   }
   else{
     while(current->getNext() != NULL){
-      current = current ->getNext();
+     current = current ->getNext();
     }
     current->setNext(new Node());
     current->getNext()->setStudent(firstName, lastName, gpa, id);
   }
-  
+}
+
+void print(Node* next){
+  if(next == head){
+    cout << "List";
+  }
+  if(next != NULL){
+    next->getStudent()->print();
+    print(next->getNext());
+  }
+}
+
+void remove(){
+  Node* current = head;
+  bool remove = true;
+  char input[10];
+  while(remove){
+    current->getStudent()->print();
+    cout << endl;
+    cout << "Is this what you want to delete(y/n)" << endl;
+    cin >> input;
+    if(strcmp(input, "y") == 0){
+      current->~Node();
+      remove = false;
+    }
+    else{
+    current = current ->getNext();
+    }
+  }
 }
