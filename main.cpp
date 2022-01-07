@@ -6,7 +6,7 @@ using namespace std;
 
 void add();
 void print (Node* next);
-void remove();
+void remove(Node* &head);
 
 Node* head = NULL;
 
@@ -26,7 +26,7 @@ int main(){
       play = false;
     }
     if(strcmp(input, "Remove") == 0){
-      remove();
+      remove(head);
     }
   }
   return 0;
@@ -69,7 +69,7 @@ void print(Node* next){
   }
 }
 
-void remove(){
+void remove(Node* &head){
   Node* current = head;
   bool remove = true;
   char input[10];
@@ -79,8 +79,15 @@ void remove(){
     cout << "Is this what you want to delete(y/n)" << endl;
     cin >> input;
     if(strcmp(input, "y") == 0){
-      current->~Node();
-      remove = false;
+      if(current == head){
+	head = current->getNext();
+	current->~Node();
+	remove = false;
+      }
+      else{
+	current->~Node();
+	remove = false;
+      }
     }
     else{
     current = current ->getNext();
