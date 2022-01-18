@@ -1,16 +1,21 @@
+#ifndef NODE_H
+#define NODE_H
+#include "Student.h"
 #include <iostream>
-#include "student.h"
+#include <cstring>
 
 using namespace std;
 
 class Node{
  public:
-  Node();
+  Node(Student* newStudent);
   ~Node();
-  void setStudent(char firstName[100], char lastName[100], float gpa, int id);
   Student* getStudent();
   void setNext(Node* newNext);
   Node* getNext();
-  Student* s;
+
+ private:
+  Student* student;
   Node* next;
 };
+#endif
