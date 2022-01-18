@@ -1,6 +1,6 @@
 #ifndef NODE_H
 #define NODE_H
-#include "Student.h"
+#include "student.h"
 #include <iostream>
 #include <cstring>
 

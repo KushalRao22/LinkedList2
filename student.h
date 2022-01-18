@@ -1,5 +1,5 @@
-#ifndef NODE_H
-#define NODE_H
+#ifndef STUDENT_H
+#define STUDENT_H
 #include <iostream>
 
 using namespace std;

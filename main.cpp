@@ -3,15 +3,15 @@
 #include "node.h"
 
 using namespace std;
-
+/*
 void add();
 void print (Node* next);
 void remove(Node* &head);
 
-Node* head = NULL;
+*/Node* head = NULL;
 
 int main(){
-  char input[10];
+  /*char input[10];
   bool play = true;
   while(play){
     cin >> input;
@@ -28,10 +28,10 @@ int main(){
     if(strcmp(input, "Remove") == 0){
       remove(head);
     }
-  }
+    }*/
   return 0;
 }
-
+/*
 void add(){
   Node* current = head;
   int id = -1;
@@ -94,3 +94,4 @@ void remove(Node* &head){
     }
   }
 }
+*/
