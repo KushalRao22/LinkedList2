@@ -12,7 +12,7 @@ By: Kushal Rao
 
 using namespace std;
 //Function Prototypes
-void add();
+void add(Node* input, char firstName[100], char lastName[100], float gpa, int id);
 void print (Node* next);
 void remove(Node* &head);
 //Define head of linked list
@@ -25,7 +25,19 @@ int main(){
     cout << "Input a valid command(Add, Print, Remove, Quit)" << endl;
     cin >> input;
     if(strcmp(input, "Add") == 0){//If user wants to add
-      add();
+      int id = -1;
+      float gpa= -1;
+      char firstName[100];
+      char lastName[100];
+      cout << "Input First Name" << endl;//Prompt user for first name
+      cin >> firstName;
+      cout << "Input Last Name" << endl;//Prompt user for last name
+      cin >> lastName;
+      cout << "Input Student ID" << endl;//Prompt user for student id
+      cin >> id;
+      cout << "Input Student GPA" << endl;//Prompt user for GPA
+      cin >> gpa;
+      add(head, firstName, lastName, gpa, id);
     }
     if(strcmp(input, "Print") == 0){//if user wants to print
       print(head);
@@ -41,33 +53,22 @@ int main(){
   return 0;
 }
 
-void add(){
-  Node* current = head;
-  int id = -1;
-  float gpa= -1;
-  char firstName[100];
-  char lastName[100];
-  cout << "Input First Name" << endl;//Prompt user for first name
-  cin >> firstName;
-  cout << "Input Last Name" << endl;//Prompt user for last name
-  cin >> lastName;
-  cout << "Input Student ID" << endl;//Prompt user for student id
-  cin >> id;
-  cout << "Input Student GPA" << endl;//Prompt user for GPA
-  cin >> gpa;
-  if(current == NULL){//If this is first Student
+void add(Node* input, char firstName[100], char lastName[100], float gpa, int id){
+  cout << "aaaaaaaaaaa" << endl;
+  if(head == NULL){//If this is first Student
     head = new Node(new Student());
     head->getStudent()->setStudent(firstName, lastName, gpa, id);//set student to have stats
+    return;
   }
-  else{
-    while(current->getNext() != NULL){//Go to the end of the list
-      current = current ->getNext();
-    }
+  else if(input->getNext() != NULL){//Go to the end of the list
+    add(input->getNext(), firstName, lastName, gpa, id);//Walk to the end of the list
+  }
     //Add a new student with stats
-    current->setNext(new Node(new Student));
-    current->getNext()->getStudent()->setStudent(firstName, lastName, gpa, id);
-  }
+    input->setNext(new Node(new Student));
+    input->getNext()->getStudent()->setStudent(firstName, lastName, gpa, id);
+    return;
 }
+
 
 void print(Node* next){//Print all students in the list
   if(next == head){
