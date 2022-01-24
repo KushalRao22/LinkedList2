@@ -1,17 +1,25 @@
+/*
+This is a class that creates a list of nodes 
+
+Last Modified: 1/24/22
+
+By: Kushal Rao
+*/
+//Imports
 #include <iostream>
 #include <cstring>
 #include "node.h"
 
 using namespace std;
-/*
+
 void add();
 void print (Node* next);
 void remove(Node* &head);
 
-*/Node* head = NULL;
+Node* head = NULL;
 
 int main(){
-  /*char input[10];
+  char input[10];
   bool play = true;
   while(play){
     cin >> input;
@@ -28,10 +36,10 @@ int main(){
     if(strcmp(input, "Remove") == 0){
       remove(head);
     }
-    }*/
+    }
   return 0;
 }
-/*
+
 void add(){
   Node* current = head;
   int id = -1;
@@ -47,15 +55,15 @@ void add(){
   cout << "Input Student GPA" << endl;//Prompt user for GPA
   cin >> gpa;
   if(current == NULL){
-    head = new Node();
-    head->setStudent(firstName, lastName, gpa, id);
+    head = new Node(new Student());
+    head->getStudent()->setStudent(firstName, lastName, gpa, id);
   }
   else{
     while(current->getNext() != NULL){
      current = current ->getNext();
     }
-    current->setNext(new Node());
-    current->getNext()->setStudent(firstName, lastName, gpa, id);
+    current->setNext(new Node(new Student));
+    current->getNext()->getStudent()->setStudent(firstName, lastName, gpa, id);
   }
 }
 
@@ -71,27 +79,35 @@ void print(Node* next){
 
 void remove(Node* &head){
   Node* current = head;
+  Node* next = head; 
   bool remove = true;
-  char input[10];
+  int input;
+  cout << "Input the ID of the student you want to remove" << endl;
+  cin >> input;
   while(remove){
-    current->getStudent()->print();
-    cout << endl;
-    cout << "Is this what you want to delete(y/n)" << endl;
-    cin >> input;
-    if(strcmp(input, "y") == 0){
-      if(current == head){
-	head = current->getNext();
-	current->~Node();
+    int check = next->getStudent()->getID();
+    if(check == input){
+      if(next == head){
+	head = next->getNext();
+	next->~Node();
 	remove = false;
       }
       else{
-	current->~Node();
+	current->setNext(next->getNext());
+	next->~Node();
 	remove = false;
       }
     }
     else{
-    current = current ->getNext();
+      if(next == NULL){
+	cout << "End of List" << endl;
+	remove = false;
+      }
+      else{
+	current = next;
+	next = next->getNext();
+      }
     }
   }
 }
-*/
+
