@@ -11,32 +11,33 @@ By: Kushal Rao
 #include "node.h"
 
 using namespace std;
-
+//Function Prototypes
 void add();
 void print (Node* next);
 void remove(Node* &head);
-
+//Define head of linked list
 Node* head = NULL;
 
 int main(){
   char input[10];
   bool play = true;
-  while(play){
+  while(play){//While user is doing stuff
+    cout << "Input a valid command(Add, Print, Remove, Quit)" << endl;
     cin >> input;
-    if(strcmp(input, "Add") == 0){
+    if(strcmp(input, "Add") == 0){//If user wants to add
       add();
     }
-    if(strcmp(input, "Print") == 0){
+    if(strcmp(input, "Print") == 0){//if user wants to print
       print(head);
       cout << endl;
     }
-    if(strcmp(input, "Quit") == 0){
+    if(strcmp(input, "Quit") == 0){//if user wants to quit
       play = false;
     }
-    if(strcmp(input, "Remove") == 0){
+    if(strcmp(input, "Remove") == 0){//if user wants to remove
       remove(head);
     }
-    }
+   }
   return 0;
 }
 
@@ -54,60 +55,55 @@ void add(){
   cin >> id;
   cout << "Input Student GPA" << endl;//Prompt user for GPA
   cin >> gpa;
-  if(current == NULL){
+  if(current == NULL){//If this is first Student
     head = new Node(new Student());
-    head->getStudent()->setStudent(firstName, lastName, gpa, id);
+    head->getStudent()->setStudent(firstName, lastName, gpa, id);//set student to have stats
   }
   else{
-    while(current->getNext() != NULL){
-     current = current ->getNext();
+    while(current->getNext() != NULL){//Go to the end of the list
+      current = current ->getNext();
     }
+    //Add a new student with stats
     current->setNext(new Node(new Student));
     current->getNext()->getStudent()->setStudent(firstName, lastName, gpa, id);
   }
 }
 
-void print(Node* next){
+void print(Node* next){//Print all students in the list
   if(next == head){
     cout << "List";
   }
-  if(next != NULL){
-    next->getStudent()->print();
-    print(next->getNext());
+  if(next != NULL){//Until the end of the list
+    next->getStudent()->print();//Print yourself
+    print(next->getNext());//Call print on next function
   }
 }
 
-void remove(Node* &head){
-  Node* current = head;
-  Node* next = head; 
+void remove(Node* &head){//Remove student
+  Node* prev = head;
+  Node* current = head; 
   bool remove = true;
   int input;
   cout << "Input the ID of the student you want to remove" << endl;
   cin >> input;
-  while(remove){
-    int check = next->getStudent()->getID();
-    if(check == input){
-      if(next == head){
-	head = next->getNext();
-	next->~Node();
-	remove = false;
+  while(remove){//while student is not removed
+    int check = current->getStudent()->getID();//get ID of the student
+    if(check == input){//If current student is the same as the one user wants to remove
+      if(current == head){//If current is head
+	head = current->getNext();//Set head to next
+	current->~Node();//Remove head
+	remove = false;//Leave loop
       }
       else{
-	current->setNext(next->getNext());
-	next->~Node();
+	prev->setNext(current->getNext());//set previous to point to next
+	current->~Node();//Remove current
 	remove = false;
       }
     }
     else{
-      if(next == NULL){
-	cout << "End of List" << endl;
-	remove = false;
-      }
-      else{
-	current = next;
-	next = next->getNext();
+      prev = current;
+      current = current->getNext();
       }
     }
   }
-}
 
