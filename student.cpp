@@ -1,7 +1,7 @@
 /*
 This is a class to define students
 
-Last modified: 1/24/22
+Last modified: 1/26/22
 
 By: Kushal Rao
 */
@@ -26,4 +26,8 @@ void Student::print(){//Print student
 
 int Student::getID(){//Return ID
   return id;
+}
+
+float Student::getGPA(){//Return GPA
+  return gpa;
 }

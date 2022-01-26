@@ -3,7 +3,7 @@ This is the .h file for student.cpp
 
 By: Kushal Rao
 
-Last modified: 1/24/22
+Last modified: 1/26/22
 */
 
 //Header Gaurd
@@ -25,5 +25,7 @@ class Student{
   void setStudent(char firstName[100], char lastName[100], float gpa, int id);
   void print();
   int getID();
+  float getGPA();
 };
 #endif
+
