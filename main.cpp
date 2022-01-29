@@ -1,8 +1,6 @@
 /*
 This is a class that creates a list of nodes 
-
-Last Modified: 1/26/22
-
+Last Modified: 1/28/22
 By: Kushal Rao
 */
 //Imports
@@ -10,10 +8,11 @@ By: Kushal Rao
 #include <iomanip>
 #include <cstring>
 #include "node.h"
+#include "student.h"
 
 using namespace std;
 //Function Prototypes
-void add(Node* input, char firstName[100], char lastName[100], float gpa, int id);
+void add(Node* input, Node* next, char firstName[100], char lastName[100], float gpa, int id);
 void print (Node* next);
 void average(Node* current, float total, float count);
 void remove(Node* &head, Node* current, Node* prev, int input);
@@ -39,7 +38,7 @@ int main(){
       cin >> id;
       cout << "Input Student GPA" << endl;//Prompt user for GPA
       cin >> gpa;
-      add(head, firstName, lastName, gpa, id);
+      add(head, head, firstName, lastName, gpa, id);
     }
     if(strcmp(input, "Print") == 0){//if user wants to print
       print(head);
@@ -48,12 +47,12 @@ int main(){
     if(strcmp(input, "Quit") == 0){//if user wants to quit
       play = false;
     }
-    //    if(strcmp(input, "Remove") == 0){//if user wants to remove
-    //int input;
-    //cout << "Input the ID of the student you want to remove" << endl;
-    //cin >> input;
-    //remove(head, head, head, input);
-      //}
+    if(strcmp(input, "Remove") == 0){//if user wants to remove
+      int input;
+      cout << "Input the ID of the student you want to remove" << endl;
+      cin >> input;
+      remove(head, head, head, input);
+    }
     if(strcmp(input, "Average") == 0){//if user wants to remove
       int input;
       float total;
@@ -64,21 +63,21 @@ int main(){
   return 0;
 }
 
-void add(Node* input, char firstName[100], char lastName[100], float gpa, int id){
+void add(Node* input, Node* next, char firstName[100], char lastName[100], float gpa, int id){
 
   if(head == NULL){//If this is first Student
     head = new Node(new Student());
     head->getStudent()->setStudent(firstName, lastName, gpa, id);//set student to have stats
     return;
   }
-  else if(input->getNext() != NULL){//Go to the end of the list
-    add(input->getNext(), firstName, lastName, gpa, id);//Walk to the end of the list
+  else if(input->getNext()->getStudent()->getID() < id){//Go to the end of the list
+    add(next, next->getNext(), firstName, lastName, gpa, id);//Walk to the end of the list
   }
     //Add a new student with stats
   Student* n = new Student;
   input->setNext(new Node(n));
   input->getNext()->getStudent()->setStudent(firstName, lastName, gpa, id);
-  input->getNext()->getStudent()->print();
+  input->getNext()->setNext(next);
   return;
 }
 
