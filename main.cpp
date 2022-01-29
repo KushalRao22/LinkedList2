@@ -12,7 +12,7 @@ By: Kushal Rao
 
 using namespace std;
 //Function Prototypes
-void add(Node* input, Node* next, char firstName[100], char lastName[100], float gpa, int id);
+void add(Node* &input, char firstName[100], char lastName[100], float gpa, int id);
 void print (Node* next);
 void average(Node* current, float total, float count);
 void remove(Node* &head, Node* current, Node* prev, int input);
@@ -38,7 +38,7 @@ int main(){
       cin >> id;
       cout << "Input Student GPA" << endl;//Prompt user for GPA
       cin >> gpa;
-      add(head, head, firstName, lastName, gpa, id);
+      add(head, firstName, lastName, gpa, id);
     }
     if(strcmp(input, "Print") == 0){//if user wants to print
       print(head);
@@ -63,23 +63,42 @@ int main(){
   return 0;
 }
 
-void add(Node* input, Node* next, char firstName[100], char lastName[100], float gpa, int id){
-
-  if(head == NULL){//If this is first Student
-    head = new Node(new Student());
-    head->getStudent()->setStudent(firstName, lastName, gpa, id);//set student to have stats
+void add(Node* &current, char firstName[100], char lastName[100], float gpa, int id){
+  if(current == NULL){//If this is first Student
+    current = new Node(new Student());
+    current->getStudent()->setStudent(firstName, lastName, gpa, id);//set student to have stats
     return;
   }
-  else if(input->getNext()->getStudent()->getID() < id){//Go to the end of the list
-    add(next, next->getNext(), firstName, lastName, gpa, id);//Walk to the end of the list
+  
+  //If next is null make a new node to add
+  if(current->getNext() == NULL){
+    //Create Node
+    Student* s = new Student;
+    Node* n = new Node(s);
+    s->setStudent(firstName, lastName, gpa, id);
+    if(current->getStudent()->getID() > s->getID()){//If new student has a lower ID than old student
+      n->setNext(current);//Set new to point to old one
+      current = n;
+    }
+    else{
+      current->setNext(n);//Set current to point to new
+    }
+    return;
   }
-    //Add a new student with stats
-  Student* n = new Student;
-  input->setNext(new Node(n));
-  input->getNext()->getStudent()->setStudent(firstName, lastName, gpa, id);
-  input->getNext()->setNext(next);
-  return;
+  if(current->getNext()->getStudent()->getID() > id){//If next student's ID is greater then new student
+    //Create new Node
+    Student* s = new Student;
+    Node* n = new Node(s);
+    s->setStudent(firstName, lastName, gpa, id);
+    n->setNext(current->getNext());//Set new Node to point to the right node
+    current->setNext(n);//Current points to new Node
+    return;
+  }
+  Node* next = current->getNext();
+  add(next, firstName, lastName, gpa, id);//Walk to where the new student needs to be placed
 }
+
+
 
 
 void print(Node* next){//Print all students in the list
